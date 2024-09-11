@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { auth } from '../config/firebase';
-import  getUserData  from '../services/userService';
-import  saveUserData  from '../services/userService';
-import  getCarrouselData from '../services/carrouselService';
-import  saveCarrouselData  from '../services/carrouselService';
+import { getUserData, saveUserData } from '../services/userService';
+import {getCarrouselData, saveCarrouselData} from "../services/carrouselService"
 
 const AdminPage = () => {
   const [userData, setUserData] = useState(null);
@@ -15,25 +12,25 @@ const AdminPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const user = await getUserData('uniqueUserId'); // Utilisez un ID d'utilisateur unique pour récupérer les données
+      const user = await getUserData('qkwBuoEernVFsBDq7bqFrTwa0ru1'); 
       setUserData(user);
-      const carrousel = await getCarrouselData('carrouselId'); // Utilisez un ID de carrousel pour récupérer les données
-      setCarrouselData(carrousel.images);
+    //   const carrousel = await getCarrouselData('carrouselId');
+    //   setCarrouselData(carrousel.images);
     };
     fetchData();
   }, []);
 
   const handleSaveUser = async () => {
     if (logoFile && aboutImageFile) {
-      await saveUserData('uniqueUserId', { email, password }, logoFile, aboutImageFile);
+      await saveUserData('qkwBuoEernVFsBDq7bqFrTwa0ru1', { email, password }, logoFile, aboutImageFile);
     } else {
-      await saveUserData('uniqueUserId', { email, password });
+      await saveUserData('qkwBuoEernVFsBDq7bqFrTwa0ru1', { email, password });
     }
   };
 
-  const handleSaveCarrousel = async (imageFiles) => {
-    await saveCarrouselData('carrouselId', imageFiles);
-  };
+//   const handleSaveCarrousel = async (imageFiles) => {
+//     await saveCarrouselData('carrouselId', imageFiles);
+//   };
 
   return (
     <div>
@@ -65,11 +62,10 @@ const AdminPage = () => {
         <button onClick={handleSaveUser}>Save User Data</button>
       </div>
 
-      <div>
+      {/* <div>
         <h2>Manage Carrousel</h2>
-        {/* Ajouter des inputs pour uploader des images du carrousel */}
-        <button onClick={() => handleSaveCarrousel(/* liste des fichiers image */)}>Save Carrousel Data</button>
-      </div>
+        <button onClick={() => handleSaveCarrousel()}>Save Carrousel Data</button>
+      </div> */}
     </div>
   );
 };
