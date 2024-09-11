@@ -1,9 +1,10 @@
+/* eslint-disable import/no-anonymous-default-export */
 import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from '../config/firebase';
 
 // Créer ou mettre à jour les données utilisateur
-export const saveUserData = async (userId, userData, logoFile, aboutImageFile) => {
+const saveUserData = async (userId, userData, logoFile, aboutImageFile) => {
   try {
     // Upload des images vers Firebase Storage
     const logoRef = ref(storage, `logos/${userId}/${logoFile.name}`);
@@ -27,7 +28,7 @@ export const saveUserData = async (userId, userData, logoFile, aboutImageFile) =
 };
 
 // Récupérer les données utilisateur
-export const getUserData = async (userId) => {
+const getUserData = async (userId) => {
   try {
     const docRef = doc(db, "users", userId);
     const docSnap = await getDoc(docRef);
@@ -42,7 +43,7 @@ export const getUserData = async (userId) => {
 };
 
 // Mettre à jour les données utilisateur
-export const updateUserData = async (userId, userData) => {
+const updateUserData = async (userId, userData) => {
   try {
     const docRef = doc(db, "users", userId);
     await updateDoc(docRef, userData);
@@ -50,3 +51,5 @@ export const updateUserData = async (userId, userData) => {
     console.error("Error updating user data: ", error);
   }
 };
+
+export default {saveUserData, getUserData, updateUserData}

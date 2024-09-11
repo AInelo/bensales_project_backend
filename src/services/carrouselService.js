@@ -3,7 +3,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from '../config/firebase';
 
 // Créer ou mettre à jour les données du carrousel
-export const saveCarrouselData = async (carrouselId, imageFiles) => {
+const saveCarrouselData = async (carrouselId, imageFiles) => {
   try {
     const imageURLs = [];
     for (const file of imageFiles) {
@@ -21,7 +21,7 @@ export const saveCarrouselData = async (carrouselId, imageFiles) => {
 };
 
 // Récupérer les données du carrousel
-export const getCarrouselData = async (carrouselId) => {
+const getCarrouselData = async (carrouselId) => {
   try {
     const docRef = doc(db, "carousels", carrouselId);
     const docSnap = await getDoc(docRef);
@@ -36,7 +36,7 @@ export const getCarrouselData = async (carrouselId) => {
 };
 
 // Mettre à jour les données du carrousel
-export const updateCarrouselData = async (carrouselId, imageFiles) => {
+const updateCarrouselData = async (carrouselId, imageFiles) => {
   try {
     const imageURLs = [];
     for (const file of imageFiles) {
@@ -52,3 +52,6 @@ export const updateCarrouselData = async (carrouselId, imageFiles) => {
     console.error("Error updating carrousel data: ", error);
   }
 };
+
+
+export default { saveCarrouselData, getCarrouselData, updateCarrouselData }

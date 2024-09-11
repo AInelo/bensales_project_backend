@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { auth } from '../config/firebase';
-import { getUserData, saveUserData } from '../services/carrouselService';
-import { getCarrouselData, saveCarrouselData } from '../services/carrouselService';
+import  getUserData  from '../services/userService';
+import  saveUserData  from '../services/userService';
+import  getCarrouselData from '../services/carrouselService';
+import  saveCarrouselData  from '../services/carrouselService';
 
 const AdminPage = () => {
   const [userData, setUserData] = useState(null);
