@@ -3,27 +3,27 @@ import { auth } from '../config/firebase';
 
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom'; // Importez useNavigate
+import { useNavigate } from 'react-router-dom'; 
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Utilisez useNavigate
+  const navigate = useNavigate(); 
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate('/admin'); // Redirection vers la page admin après connexion réussie
+      navigate('/admin'); 
     } catch (error) {
       console.error("Error signing in: ", error.message);
     }
   };
 
   return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={handleLogin}>
+    <div className='h-screen w-screen flex flex-col justify-center items-center'>
+      <h1 className='text-2xl' >Login</h1>
+      <form className='flex flex-col items-center justify-center' onSubmit={handleLogin}>
         <input 
           type="email" 
           value={email} 

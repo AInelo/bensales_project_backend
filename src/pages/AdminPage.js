@@ -4,7 +4,7 @@ import {getCarrouselData, saveCarrouselData} from "../services/carrouselService"
 
 const AdminPage = () => {
   const [userData, setUserData] = useState(null);
-  const [carrouselData, setCarrouselData] = useState([]);
+//   const [carrouselData, setCarrouselData] = useState([]);
   const [logoFile, setLogoFile] = useState(null);
   const [aboutImageFile, setAboutImageFile] = useState(null);
   const [email, setEmail] = useState('');
@@ -33,33 +33,45 @@ const AdminPage = () => {
 //   };
 
   return (
-    <div>
+    <div className='h-screen w-screen flex flex-col items-center justify-center'>
       <h1>Admin Page</h1>
-      <div>
+      <div className='flex flex-col items-center justify-center'>
         <h2>Manage User</h2>
+
+        <label htmlFor='name'>Ton email</label>
         <input 
-          type="email" 
+          type="email"
+          id='email'
           value={email} 
           onChange={(e) => setEmail(e.target.value)} 
           placeholder="Email" 
         />
+
+        <label > ton Mot de pass </label>
         <input 
-          type="password" 
+          type="password"
+          id='password'
           value={password} 
           onChange={(e) => setPassword(e.target.value)} 
           placeholder="Password" 
         />
+
+        <label htmlFor='logo' > Ton Logo</label>
         <input 
-          type="file" 
+          type="file"
+          id='logo'
           onChange={(e) => setLogoFile(e.target.files[0])} 
           accept="image/*" 
         />
+
+        <label htmlFor='aboutPageImage'> Ton image de la page About</label>
         <input 
-          type="file" 
+          type="file"
+          id='aboutPageImage'
           onChange={(e) => setAboutImageFile(e.target.files[0])} 
           accept="image/*" 
         />
-        <button onClick={handleSaveUser}>Save User Data</button>
+        <button  onClick={handleSaveUser}>Save User Data</button>
       </div>
 
       {/* <div>

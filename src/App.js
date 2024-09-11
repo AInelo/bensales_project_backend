@@ -1,15 +1,3 @@
-// import logo from './logo.svg';
-// import './App.css';
-// import { Auth } from './components/auth';
-// function App() {
-//   return (
-//     <div className="">
-//       <Auth/>
-//     </div>
-//   );
-// }
-
-// export default App;
 
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'; // Remplace Redirect par Navigate
