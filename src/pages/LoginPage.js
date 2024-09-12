@@ -1,42 +1,50 @@
-import { auth } from '../config/firebase';
+import { auth } from "../config/firebase";
 
-
-import React, { useState } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom'; 
+import React, { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate(); 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate('/admin'); 
+      navigate("/admin");
     } catch (error) {
       console.error("Error signing in: ", error.message);
     }
   };
 
   return (
-    <div className='h-screen w-screen flex flex-col justify-center items-center'>
-      <h1 className='text-2xl' >Login</h1>
-      <form className='flex flex-col items-center justify-center' onSubmit={handleLogin}>
-        <input 
-          type="email" 
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)} 
-          placeholder="Email" 
-          required 
+    <div className=" h-screen w-screen flex flex-col justify-center items-center">
+      <form
+        className="h-auto w-auto border-2 border-amber-300 flex flex-col items-center justify-center shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)]"
+        onSubmit={handleLogin}
+      >
+        <h1 className="text-2xl">Login</h1>
+
+        <label htmlFor="email">Ton email de connexion</label>
+        <input
+          type="email"
+          id="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+          required
         />
-        <input 
-          type="password" 
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)} 
-          placeholder="Password" 
-          required 
+        <label htmlFor="password">Ton mot de Passe</label>
+
+        <input
+          type="password"
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+          required
         />
         <button type="submit">Login</button>
       </form>
@@ -46,25 +54,8 @@ const LoginPage = () => {
 
 export default LoginPage;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // import React, { useState } from 'react';
 // import { signInWithEmailAndPassword } from 'firebase/auth';
-
 
 // const LoginPage = ({ history }) => {
 //   const [email, setEmail] = useState('');
@@ -84,19 +75,19 @@ export default LoginPage;
 //     <div>
 //       <h1>Login</h1>
 //       <form onSubmit={handleLogin}>
-//         <input 
-//           type="email" 
-//           value={email} 
-//           onChange={(e) => setEmail(e.target.value)} 
-//           placeholder="Email" 
-//           required 
+//         <input
+//           type="email"
+//           value={email}
+//           onChange={(e) => setEmail(e.target.value)}
+//           placeholder="Email"
+//           required
 //         />
-//         <input 
-//           type="password" 
-//           value={password} 
-//           onChange={(e) => setPassword(e.target.value)} 
-//           placeholder="Password" 
-//           required 
+//         <input
+//           type="password"
+//           value={password}
+//           onChange={(e) => setPassword(e.target.value)}
+//           placeholder="Password"
+//           required
 //         />
 //         <button type="submit">Login</button>
 //       </form>

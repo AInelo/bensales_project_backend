@@ -71,6 +71,7 @@ const AdminPage = () => {
           onChange={(e) => setAboutImageFile(e.target.files[0])} 
           accept="image/*" 
         />
+        
         <button  onClick={handleSaveUser}>Save User Data</button>
       </div>
 
