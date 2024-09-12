@@ -22,13 +22,14 @@ const LoginPage = () => {
   return (
     <div className=" h-screen w-screen flex flex-col justify-center items-center">
       <form
-        className="h-auto w-auto border-2 border-amber-300 flex flex-col items-center justify-center shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)]"
+        className="h-auto w-1/2 flex flex-col items-center justify-center rounded-2xl shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)]"
         onSubmit={handleLogin}
       >
-        <h1 className="text-2xl">Login</h1>
+        <h1 className="text-2xl font-ubuntu">Login</h1>
 
-        <label htmlFor="email">Ton email de connexion</label>
+        <label htmlFor="email">email</label>
         <input
+        className="form-input"
           type="email"
           id="email"
           value={email}
@@ -36,9 +37,10 @@ const LoginPage = () => {
           placeholder="Email"
           required
         />
-        <label htmlFor="password">Ton mot de Passe</label>
+        <label htmlFor="password">Mot de Passe</label>
 
         <input
+        className="form-input"
           type="password"
           id="password"
           value={password}
@@ -46,7 +48,7 @@ const LoginPage = () => {
           placeholder="Password"
           required
         />
-        <button type="submit">Login</button>
+        <button className="custom-btn" type="submit">Login</button>
       </form>
     </div>
   );

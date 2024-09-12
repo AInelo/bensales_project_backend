@@ -5,7 +5,7 @@ import {
   Route,
   Routes,
   Navigate,
-} from "react-router-dom"; // Remplace Redirect par Navigate
+} from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
 import UserInfosManagePage from "./pages/UserInfosManagePage";
@@ -14,11 +14,30 @@ import CarrouselManagePage from "./pages/CarrouselManagePage";
 import { auth } from "./config/firebase";
 
 const App = () => {
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      setLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  if (loading) {
+    return <div>Loading ...</div>;
+  }
+
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        
+        {/* Si l'utilisateur est déjà connecté, redirige vers /admin */}
+        <Route
+          path="/login"
+          element={user ? <Navigate to="/admin" /> : <LoginPage />}
+        />
+
         <Route
           path="/admin/user-manage"
           element={<PrivateRoute element={<UserInfosManagePage />} />}
@@ -28,7 +47,7 @@ const App = () => {
           path="/admin"
           element={<PrivateRoute element={<AdminPage />} />}
         />
-        
+
         <Route
           path="/admin/carousel-manage"
           element={<PrivateRoute element={<CarrouselManagePage />} />}
@@ -44,18 +63,7 @@ const App = () => {
 };
 
 // Composant PrivateRoute pour protéger les routes
-// const PrivateRoute = ({ component: Component, ...rest }) => {
-//   const user = auth.currentUser;
-//   return user ? <Component {...rest} /> : <Navigate to="/login" />;
-// };
-
-// const PrivateRoute = ({ element }) => {
-//   const user = auth.currentUser;
-//   console.log("The current User is : " + user)
-//   return user ? element : <Navigate to="/login" />;
-// };
-
-const   PrivateRoute = ({ element }) => {
+const PrivateRoute = ({ element }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
 
@@ -68,11 +76,10 @@ const   PrivateRoute = ({ element }) => {
   }, []);
 
   if (loading) {
-    return <div>Loading ...</div>
+    return <div>Loading ...</div>;
   }
-  return user ? element : <Navigate to={"/login"}/>;
-}
 
-
+  return user ? element : <Navigate to="/login" />;
+};
 
 export default App;
