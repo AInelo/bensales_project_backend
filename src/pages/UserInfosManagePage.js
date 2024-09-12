@@ -189,16 +189,16 @@ const UserInfosManagePage = () => {
             </label>
             {isImageField ? (
               <>
-                {/* <input
+                <input
                   type="file"
                   onChange={handleImageChange}
                   className="mb-2"
-                /> */}
-                 <ImageUpload 
+                />
+                 {/* <ImageUpload 
                   alt = {key}
                   onChange = {handleImageChange}
                   src = {formData[key]}
-                  />
+                  /> */}
                 {loading ? (
                   <div>Loading...</div>
                 ) : (
@@ -235,9 +235,10 @@ const UserInfosManagePage = () => {
         {userData ? (
           <div>
             {renderInputFields()}
+
             <button
               onClick={handleSave}
-              className="mt-4 p-2 bg-blue-500 text-white rounded"
+              className="mt-4 p-2 bg- text-white rounded"
             >
               Save
             </button>

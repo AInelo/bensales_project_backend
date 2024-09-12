@@ -1,34 +1,84 @@
 
 /* eslint-disable import/no-anonymous-default-export */
 import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, deleteObject,uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from '../config/firebase';
 import { auth } from "../config/firebase";
 
 // Créer ou mettre à jour les données utilisateur
+// export const saveUserData = async (userId, userData, logoFile, aboutImageFile) => {
+//   try {
+    
+//     await setDoc(doc(db, "users", userId), {
+//       ...userData,
+//       logo: await formatUrlLinkToImage(logoFile, userId) || userData.logo,
+//       aboutImage: await formatUrlLinkToImage(aboutImageFile, userId) || userData.aboutImage
+//     }, { merge: true }); // Merge pour ne pas écraser les anciennes données
+//   } catch (error) {
+//     console.error("Error saving user data: ", error);
+//   }
+// };
+
+// const formatUrlLinkToImage = async (imageFile, userId) => {
+//   let imageUrl = "";
+//   if (imageFile) {
+//     const logoRef = ref(storage, `logos/${userId}/${imageFile.name}`);
+//     await uploadBytes(logoRef, imageFile);
+//     imageUrl = await getDownloadURL(logoRef);
+//   }
+
+//   return imageUrl
+// }
+
+
 export const saveUserData = async (userId, userData, logoFile, aboutImageFile) => {
   try {
+    // Obtenez les données utilisateur existantes pour vérifier les anciennes images
+    const userDocRef = doc(db, "users", userId);
+    const userDoc = await getDoc(userDocRef);
+    const existingUserData = userDoc.data();
     
-    await setDoc(doc(db, "users", userId), {
+    // Supprimer les anciennes images si elles existent
+    if (existingUserData) {
+      if (existingUserData.logo) {
+        const oldLogoRef = ref(storage, existingUserData.logo);
+        await deleteObject(oldLogoRef);
+      }
+      if (existingUserData.aboutImage) {
+        const oldAboutImageRef = ref(storage, existingUserData.aboutImage);
+        await deleteObject(oldAboutImageRef);
+      }
+    }
+
+    // Télécharger les nouvelles images et obtenir les URLs
+    const newLogoUrl = await formatUrlLinkToImage(logoFile, userId, 'logos');
+    const newAboutImageUrl = await formatUrlLinkToImage(aboutImageFile, userId, 'aboutImages');
+
+    // Mettre à jour les données utilisateur dans Firestore
+    await setDoc(userDocRef, {
       ...userData,
-      logo: await formatUrlLinkToImage(logoFile, userId) || userData.logo,
-      aboutImage: await formatUrlLinkToImage(aboutImageFile, userId) || userData.aboutImage
-    }, { merge: true }); // Merge pour ne pas écraser les anciennes données
+      logo: newLogoUrl || userData.logo,
+      aboutImage: newAboutImageUrl || userData.aboutImage
+    }, { merge: true });
+
   } catch (error) {
     console.error("Error saving user data: ", error);
   }
 };
 
-const formatUrlLinkToImage = async (imageFile, userId) => {
+const formatUrlLinkToImage = async (imageFile, userId, folder) => {
   let imageUrl = "";
   if (imageFile) {
-    const logoRef = ref(storage, `logos/${userId}/${imageFile.name}`);
-    await uploadBytes(logoRef, imageFile);
-    imageUrl = await getDownloadURL(logoRef);
+    const imageRef = ref(storage, `${folder}/${userId}/${imageFile.name}`);
+    await uploadBytes(imageRef, imageFile);
+    imageUrl = await getDownloadURL(imageRef);
   }
 
-  return imageUrl
+  return imageUrl;
 }
+
+
+
 
 
 
